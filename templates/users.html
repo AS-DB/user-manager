@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Users</h1>
+
+    {% if users %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_user', id=user.id) }}">
+                            Edit
+                        </a>
+
+                        <form
+                            action="{{ url_for('delete_user', id=user.id) }}"
+                            method="POST"
+                            class="inline-form"
+                        >
+                            <button
+                                type="submit"
+                                class="delete-button"
+                            >
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+
+    <br>
+
+    <a href="{{ url_for('index') }}">Add New User</a>
+
+</div>
+
+</body>
+</html>
